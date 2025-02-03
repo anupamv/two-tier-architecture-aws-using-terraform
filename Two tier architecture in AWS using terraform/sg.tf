@@ -30,16 +30,16 @@ resource "aws_security_group" "sg" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
-  egress {
-    description      = "Rule to allow connections to database from any instances this security group is attached to"
-    from_port        = 3306
-    to_port          = 3306
-    protocol         = "tcp"
-    security_groups  = [aws_security_group.db-sg.id]
-    self             = false
-  }
-
   tags = {
     Name = "allow_tls"
   }
 }
+
+resource "aws_vpc_security_group_egress_rule" "example" {
+  security_group_id = aws_security_group.db-sg.id
+  
+  cidr_ipv4   = "10.0.0.0/24"
+  from_port   = 3306
+  ip_protocol = "tcp"
+  to_port     = 3306
+
