@@ -42,4 +42,4 @@ resource "aws_vpc_security_group_egress_rule" "example" {
   from_port   = 3306
   ip_protocol = "tcp"
   to_port     = 3306
-
+}
